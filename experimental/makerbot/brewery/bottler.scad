@@ -1,11 +1,12 @@
 $fn=100;
 
-all();
+//all();
 
-//scale(0.25) {
+scale(0.25) {
 //  translate([-80, 0, 10]) head();
-//  scale([0.95, 1.05, 0.95]) claw();
-//}
+// scale([0.95, 1.05, 0.95]) claw();
+   frame();
+}
 
 //scale(0.25) { 
 // scale([0.95, 1.05, 0.95]) claw();
@@ -130,16 +131,10 @@ module claw() {
 }
 
 module frame() {
-  difference () 
-    cylinder(h = 10, r = 230);
-    cylinder(h = 10, r = 180);
-
-  translate([0, 0, 200]) difference() {
+  difference () {
     cylinder(h = 10, r = 230);
     cylinder(h = 10, r = 180);
   }
-  translate([200, 30, 0]) cylinder(h = 200, r = 5);
-  translate([200, -30, 0]) cylinder(h = 200, r = 5);
 }
 
 
@@ -159,8 +154,17 @@ module roller(radius) {
 
 module all() {
   % translate([-290, 0, -70]) {
+    // bottom frame
     frame();
+    // upper frame
+    translate([0, 0, 200]) frame();
+
+    // grid
+    translate([200, 30, 0]) cylinder(h = 200, r = 5);
+    translate([200, -30, 0]) cylinder(h = 200, r = 5);
   }
+
+
 
   base();
   rotate([0, 180, 0]) claw();
