@@ -1,0 +1,5 @@
+
+# appengine auto generated files
+java/com/cacopu/war/WEB-INF/appengine-generated/
+java/com/cacopu/war/WEB-INF/lib/
+java/com/cacopu/war/WEB-INF/classes/
