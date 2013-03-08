@@ -1,0 +1,250 @@
+body {
+  background-color: white;
+  font: 0.75em 'Lucida Grande',sans-serif;
+  background: #D0CDCD url('background.jpg') fixed  top left;
+  padding: 25px;
+}
+
+.container {
+  width: 700px;
+  min-height: 550px;
+  background-color: white;
+  text-align: left;
+}
+
+.header {
+  -webkit-border-top-left-radius: 5px;
+  -webkit-border-top-right-radius: 5px;
+  -moz-border-radius-topleft: 5px;
+  -moz-border-radius-topright: 5px;
+  background-color: #f1f2f4;
+  padding: 20px;
+  height: 50px;
+  border-bottom: 1px solid #CCC;
+}
+
+
+.header-title {
+  margin: 0px;
+  font-color: #333;
+  font: 20px Helvetica Neue,Helvetica,sans-serif;
+  font-size: 20px !important;
+  letter-spacing: 0px;
+}
+
+a {
+  color: #2276BB;
+}
+
+input, textarea {
+  border: 1px solid #CCCCCC;
+  -webkit-border-radius: 4px 4px 4px 4px;
+  -moz-border-radius: 4px 4px 4px 4px;
+  -moz-box-shadow: 0 1px #FFFFFF;
+  border: 1px solid #CCCCCC;
+  color: #222222;
+  font: 14px/18px Helvetica Neue,Arial,sans-serif;
+  padding: 5px;
+}
+
+.header .query {
+  height: 16px;
+  padding: 8px;
+  width: 482px;
+  float: left;
+}
+
+.header .search {
+  background: url('search-icon.png') no-repeat;
+  width: 38px;
+  height: 24px;
+  margin-left: -40px;
+  margin-top: 3px;
+  float: left;
+  cursor: pointer;  
+}
+
+.spacer {
+  margin: 0px 20px;
+  border-top: 1px solid #CCC;
+  border-bottom: 1px solid white;
+}
+
+.row {
+  padding: 20px;
+  background-color: white;  
+}
+
+.item {
+  padding: 5px 0;
+  clear: both;
+  height: 50px;
+}
+
+.item .key {
+  width: 100px;
+  float: left;
+  width: 20%;
+}
+
+.item .value {
+  float: left;
+  width: 80%;
+}
+
+.footnote {
+  color: #777777;
+  font-size: 11px;
+}
+
+.create .item {
+  height: 30px;
+}
+
+.source-link {
+  color: #0E774A;
+}
+
+.tabs {
+  background-color: #F1F2F4;
+  margin-top: -20px;
+  border-bottom: 1px solid #CCCCCC;
+  padding-bottom: 0px;
+}
+
+.tab {
+  border: 1px solid #CCCCCC;
+  background-color: white;
+  text-align: center;
+  padding: 5px 13px;
+  float: left;
+  margin-right: 10px;
+  border-bottom: 1px solid white;
+  padding-top: 5px;
+  font-weight: bold;
+}
+
+.tab-active {
+  border-bottom: 2px solid white;
+  margin-bottom: -1px;
+}
+
+.tab a {
+  text-decoration: none;
+  color: #333333;
+}
+
+.tab-right {
+  float: right;
+}
+
+.directory {
+  float: left;
+}
+
+.profile {
+  width: 30%;
+  float: left;
+}
+
+.follow-link {
+  font-size: 16px;
+}
+
+.input-file {
+  position: relative;
+  width: 300px;
+  overflow: hidden;
+  float: left;
+  margin-right: 10px;
+}
+
+.input-file .filename {
+  width: 288px;
+  background: white;
+}
+
+.input-file .browse {
+}
+
+.file .icon {
+  border-style: none;
+}
+
+.file {
+  float: left;
+  width: 100px;
+  height: 100px;
+  text-align: center;
+  margin: 10px;
+  overflow: hidden;
+}
+
+.path {
+  border: 1px solid #CCCCCC;
+  padding: 10px;
+  font-size: 15px;
+}
+
+.signin {
+  float: right;
+}
+
+.signin .key {
+  width: auto;
+  float: none;
+}
+
+.signin .value {
+  float: none;
+  width: auto;
+}
+
+.interstitial {
+  float: left;
+  width: 60%;
+  height: 250px;
+}
+
+.interstitial .definition {
+  font-family: Palatino, Georgia, "Times New Roman", serif;
+  font-size: 32px; 
+}
+
+.interstitial .phonetic {
+  font-family: Palatino, Georgia, "Times New Roman", serif;
+  color: #666666;
+  font-size: 18px;
+  margin-left: 5px;
+}
+
+.header .title {
+  color: black;
+  text-decoration: none;
+}
+
+.dialog {
+  margin-right:auto;
+  margin-left:auto;
+  border: 1px solid #CCCCCC;
+  background-color: #fff1a8;  
+  padding: 10px;
+}
+
+.processing {
+  color: #CCCCCC;
+  font-style: italic;
+}  
+
+.file-opaque {
+  opacity: 0.4;
+  filter: alpha(opacity=40);
+}
+
+.importer .preview {
+  border: 1px solid #CCCCCC;
+  height: 200px;
+  color: black;
+  padding-top: 20px;
+  overflow-x: hidden;
+}

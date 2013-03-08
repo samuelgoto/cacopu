@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Lists;
 
 public class Bots {
   
@@ -41,7 +42,7 @@ public class Bots {
   
   
   static Bot compose(Bot... bots) {
-    return new CompositeBot(ImmutableList.of(bots));
+    return new CompositeBot(Lists.newArrayList(bots));
   }
   
   //static Bot bot(KeyValueStore<String, String> store) {

@@ -1,0 +1,628 @@
+{namespace cacopu}
+
+/**
+ * @param body Body.
+ */
+{template .html}
+  <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"> 
+  <html xmlns="http://www.w3.org/1999/xhtml">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/> 
+  <head>
+    <title>Solutions</title>
+    <link rel="shortcut icon" href="favicon.ico" />
+    <link href="/static/style.css" rel="stylesheet" type="text/css">
+    
+    <!-- The standard Google Loader script. -->
+    <script src="http://www.google.com/jsapi"></script>
+    <script src="static/cacopu.js"></script>
+    
+  </head>
+  <body>
+    <center>
+    <div class="container">
+      {$body|noescape}
+    </div>
+    </center>
+    </body>
+  </html>
+{/template}
+
+/**
+ * @param query The query.
+ */
+{template .header}
+  <div class="header">
+    <h2 class="header-title">
+      <a class="title" href="/">welcome!</a>
+    </h2>
+    <div>
+      <form id="search" method="get" action="/search">
+      <input class="query" type="text" name="q" value="{$query}">
+      <div onclick="javascript: document.forms['search'].submit();"
+          class="search">
+      </div>
+      </form>
+    </div>
+  </div>
+  <div style="clear: both;"></div>
+{/template}
+
+/**
+ * @param name The name of the tab.
+ * @param url The url it takes the user to.
+ * @param opt_active The name of active tab (defaults to false).
+ * @param opt_right Whether the tab is to the right (defaults to the left).
+ */
+{template .tab}
+  <div class="{if $opt_active}tab-active{sp}{/if} {if $opt_right}tab-right{/if} tab">
+    <a href="{$url}">{$name}</a>
+  </div>
+{/template}
+
+/**
+ * @param tabs The tabs.
+ */
+{template .tabsRow}
+  <div class="row tabs">
+    {$tabs|noescape}
+    <div style="clear: both"></div>
+  </div>
+{/template}
+
+/**
+ * Says hello to the world.
+ */
+{template .indexHtml}
+  {call .html}
+    {param body}
+      {call .header}
+        {param query}{/param}
+      {/call}
+      
+      {call .tabsRow}
+        {param tabs}
+          {call .tab}
+            {param name}login{/param}
+            {param url}/home{/param}
+            {param opt_right}true{/param}
+          {/call}
+        {/param}
+      {/call}
+     
+      <div class="row">   
+
+		Welcome to evolving.biz!
+
+        <br>
+        <br>
+        <br>
+
+		<center>
+        <iframe width="560" height="315" src="http://www.youtube.com/embed/nnsSUqgkDwU" frameborder="0" allowfullscreen>
+        </iframe>
+		</center>
+
+        <br>
+        <br>
+
+		<form action="/home">
+			<input style="float:right;" type="submit" value="get started!">
+		</form>
+
+        <div style="clear: both"></div>
+      </div>
+    {/param}
+  {/call}
+{/template}
+
+/**
+ * @param notFound
+ * @param id
+ * @param name
+ * @param price
+ * @param description
+ * @param url
+ * @param loggedIn
+ * @param logoutUrl
+ * @param loginUrl
+ */
+{template .productHtml}
+  {call .html}
+    {param body}
+
+      {call .header}
+        {param query}{/param}
+      {/call}
+
+      {call .tabsRow}
+        {param tabs}
+          {if $loggedIn}
+            {call .tab}
+              {param name}home{/param}
+              {param url}/home{/param}
+            {/call}
+          {/if}
+          {call .tab}
+            {param name}{$name|truncate:20}{/param}
+            {param url}{/param}
+            {param opt_active}true{/param}
+          {/call}
+          {if $loggedIn}
+            {call .tab}
+              {param name}logout{/param}
+              {param url}{$logoutUrl}{/param}
+              {param opt_right}true{/param}
+            {/call}
+          {else}
+            {call .tab}
+              {param name}login{/param}
+              {param url}{$loginUrl}{/param}
+              {param opt_right}true{/param}
+            {/call}
+          {/if}
+        {/param}
+      {/call}
+
+      <div class="row">
+        {if $notFound}
+          Product not found!
+        {else}
+          <a href="{$url}">{$name}</a>
+          <br>
+          <br>
+          <br>
+          <br>price: {$price}
+          <br>description: {$description}
+
+          <br>
+          <br>
+          <br>
+
+          <input onclick="window.location='/checkout?id={$id}'" type="submit" value="order now!" />
+          
+        {/if}
+      </div>
+    {/param}
+  {/call}
+{/template}
+
+/**
+ */
+{template .productNotFoundHtml}
+  {call .html}
+    {param body}
+
+      {call .header}
+        {param query}{/param}
+      {/call}
+
+      {call .tabsRow}
+        {param tabs}
+          {call .tab}
+            {param name}home{/param}
+            {param url}/home{/param}
+          {/call}
+        {/param}
+      {/call}
+
+      <div class="row">
+          Product not found!
+      </div>
+    {/param}
+  {/call}
+{/template}
+
+/**
+ * @param product
+ */
+{template .checkoutHtml}
+  {call .html}
+    {param body}
+
+      {call .header}
+        {param query}{/param}
+      {/call}
+
+      {call .tabsRow}
+        {param tabs}
+          {call .tab}
+            {param name}{$product.name|truncate:20}{/param}
+            {param url}{/param}
+            {param opt_active}true{/param}
+          {/call}
+        {/param}
+      {/call}
+
+      <div class="row">
+        <h2>
+        Step 1 of 3: Filling the form
+        </h2>
+        <small class="footnote">
+    	  Next: reviewing your information.
+        </small>
+
+		<br>
+		<br>
+		<br>
+        
+    	<form method="POST" action="checkout">
+
+    	    <input type="hidden" name="id" value="{$product.id}">
+
+			<div class="item">
+	      		<div class="key">Name</div>
+      			<div class="value">{$product.name}
+      			</div>
+    		</div>
+
+			<div class="item">
+	      		<div class="key">Price</div>
+      			<div class="value">{$product.price}</div>
+    		</div>
+
+			<div class="item">
+	      		<div class="key">Description</div>
+      			<div class="value">{$product.description}</div>
+    		</div>
+
+			<div class="item">
+	      		<div class="key">Your name</div>
+      			<div class="value">
+      			<input type="text" name="buyer.name">
+      			</div>
+    		</div>
+
+			<div class="item">
+	      		<div class="key">Your email</div>
+      			<div class="value">
+      			<input type="text" name="buyer.email">
+                <br>
+                <small class="footnote">
+    	    	We will use this to send you updates on your order.
+    	    	</small>
+      			</div>
+    		</div>
+
+			<div class="item">
+	      		<div class="key">Phone</div>
+      			<div class="value">
+      			<input type="text" name="buyer.phone">
+                <br>
+                <small class="footnote">
+    	    	We will use this in case we can't reach you by email.
+    	    	</small>
+      			</div>
+    		</div>
+
+			<div class="item">
+	      		<div class="key">Zip code</div>
+      			<div class="value">
+      			<input type="text" name="buyer.zip">
+                <br>
+                <small class="footnote">
+    	    	We will use this case we need to calculate the shipping costs.
+    	    	</small>
+      			</div>
+    		</div>
+
+			<div class="item">
+	      		<div class="key">&nbsp;</div>
+      			<div class="value">
+    	 		<br>
+    	 		<br>
+      	    	<input type="submit" value="proceed to checkout">
+      	    	<br>
+                <small class="footnote">
+  	        	You will have one more chance to review this order before submitting it.
+   	        	</small>
+      			</div>
+    		</div>
+	    </form>
+      </div>
+      <br>
+      <br>
+      <br>
+    {/param}
+  {/call}
+{/template}
+
+/**
+ * @param product
+ * @param buyer
+ */
+{template .reviewHtml}
+  {call .html}
+    {param body}
+
+      {call .header}
+        {param query}{/param}
+      {/call}
+
+      {call .tabsRow}
+        {param tabs}
+          {call .tab}
+            {param name}{$product.name|truncate:20}{/param}
+            {param url}{/param}
+            {param opt_active}true{/param}
+          {/call}
+        {/param}
+      {/call}
+
+      <div class="row">
+        <h2>
+        Step 2 of 3: Review your order
+        </h2>
+        <small class="footnote">
+    	  Next: order confirmation.
+        </small>
+
+		<br>
+		<br>
+		<br>
+        
+    	<form method="POST" action="checkout">
+
+    	    <input type="hidden" name="id" value="{$product.id}">
+    	    <input type="hidden" name="confirm" value="true">
+
+			<div class="item">
+	      		<div class="key">Name</div>
+      			<div class="value">{$product.name}
+      			</div>
+    		</div>
+
+			<div class="item">
+	      		<div class="key">Price</div>
+      			<div class="value">{$product.price}</div>
+    		</div>
+
+			<div class="item">
+	      		<div class="key">Description</div>
+      			<div class="value">{$product.description}</div>
+    		</div>
+
+			<div class="item">
+	      		<div class="key">Your name</div>
+      			<div class="value">
+      			<input readonly="true" type="text" name="buyer.name"
+      			  value="{$buyer.name}">
+      			</div>
+    		</div>
+
+			<div class="item">
+	      		<div class="key">Your email</div>
+      			<div class="value">
+      			<input readonly="true" type="text" name="buyer.email"
+      			  value="{$buyer.email}">
+      			<br>
+                <small class="footnote">
+    	    	We will use this to send you updates on your order.
+    	    	</small>
+      			</div>
+    		</div>
+
+			<div class="item">
+	      		<div class="key">Phone</div>
+      			<div class="value">
+      			<input readonly="true" type="text" name="buyer.phone"
+      			  value="{$buyer.phone}">
+                <br>
+                <small class="footnote">
+    	    	We will use this in case we can't reach you by email.
+    	    	</small>
+      			</div>
+    		</div>
+
+			<div class="item">
+	      		<div class="key">Zip code</div>
+      			<div class="value">
+      			<input readonly="true" type="text" name="buyer.zip"
+      			  value="{$buyer.zip}">
+                <br>
+                <small class="footnote">
+    	    	We will use this case we need to calculate the shipping costs.
+    	    	</small>
+      			</div>
+    		</div>
+
+			<div class="item">
+	      		<div class="key">&nbsp;</div>
+      			<div class="value">
+    	 		<br>
+    	 		<br>
+      	    	<input type="submit" value="confirm!">
+      	    	<br>
+                <small class="footnote">
+  	        	You will be taken to a page with the confirmation of your order.
+  	        	</small>
+      			</div>
+    		</div>
+	    </form>
+      </div>
+      <br>
+      <br>
+      <br>
+    {/param}
+  {/call}
+{/template}
+
+/**
+ * @param product
+ * @param buyer
+ */
+{template .emailText}
+
+  Congratulations! The following buyer {$buyer.email} wants to buy the following product:
+  
+  {$product.name}
+  
+  Evolving.biz 
+
+{/template}
+
+/**
+ * @param product
+ * @param buyer
+ */
+{template .emailHtml}
+  <html>
+  <body>
+  <br>
+  Congratulations! The following buyer {$buyer.email} wants to buy the following product:
+  <br>
+  <br>
+  {$product.name}
+  <br>
+  Evolving.biz
+  <br>
+  </body> 
+  </html>
+{/template}
+
+
+
+/**
+ * @param product
+ * @param buyer
+ */
+{template .confirmedHtml}
+  {call .html}
+    {param body}
+
+      {call .header}
+        {param query}{/param}
+      {/call}
+
+      {call .tabsRow}
+        {param tabs}
+          {call .tab}
+            {param name}{$product.name|truncate:20}{/param}
+            {param url}{/param}
+            {param opt_active}true{/param}
+          {/call}
+        {/param}
+      {/call}
+
+      <div class="row">
+        <h2>
+        Step 3 of 3: Your order has been received!
+        </h2>
+        <small class="footnote">
+          We've sent you an email to {$buyer.email} with some information!
+    	  <br>
+    	  <br>
+    	  Next: one of our agents will get in contact with you over email or phone.
+        </small>
+        
+        <br>
+        <br>
+        <br>
+
+		<a href="/{$product.id}">Back to "{$product.name}"</a>.
+      </div>
+      <br>
+      <br>
+    {/param}
+  {/call}
+{/template}
+
+/**
+ * @param products
+ * @param logoutUrl
+ */
+{template .createHtml}
+  {call .html}
+    {param body}
+	
+      {call .header}
+        {param query}{/param}
+      {/call}
+      
+      {call .tabsRow}
+        {param tabs}
+          {call .tab}
+            {param name}home{/param}
+            {param url}/home{/param}
+            {param opt_active}true{/param}
+          {/call}
+          {call .tab}
+            {param name}logout{/param}
+            {param url}{$logoutUrl}{/param}
+            {param opt_right}true{/param}
+          {/call}
+        {/param}
+      {/call}
+
+    <script type="text/javascript">
+    // Use the Google Loader script to load the google.picker script.
+    // google.setOnLoadCallback(createPicker);
+    // google.load('picker', '1');
+    </script>
+
+      <div class="row">   
+    	Create an ad:
+
+        <br>
+        <br>
+        <br>
+
+    	<form method="POST" action="home">
+			<div class="item">
+	      		<div class="key">Name</div>
+      			<div class="value">
+    	    	<input type="text" name="name">
+		      	<br><small class="footnote">This is going to be the title of your ad.</small>
+      			</div>
+    		</div>
+
+			<div class="item">
+	      		<div class="key">Price</div>
+      			<div class="value">
+    	    	<input type="text" name="price">
+      			</div>
+    		</div>
+
+			<div class="item">
+	      		<div class="key">Description</div>
+      			<div class="value">
+    	    	<textarea name="description"></textarea>
+		      	<br><small class="footnote">This is going to be the title of your ad.</small>
+      			</div>
+    		</div>
+
+			<div class="item">
+	      		<div class="key">&nbsp;</div>
+      			<div class="value">
+    	 		<br>
+    	 		<br>
+    	    	<input type="submit" value="create">
+      			</div>
+    		</div>
+	    	
+	    </form>
+
+        <div style="clear: both"></div>
+
+        <br>
+        <br>
+
+        <div class="spacer"></div>
+
+        <br>
+        <br>
+
+    	{foreach $product in $products}
+	      <a href="/{$product.id}">{$product.name}</a>
+	      {sp}
+	      <small>
+	      (<a href="/{$product.id}?delete=true"
+	          onclick="if (confirm('Are you sure you want to delete ?')) {lb} window.location = '/{$product.id}?delete=true';{rb}">
+	      delete
+	      </a>)
+	      </small>
+	      <br>
+    	{/foreach}
+      </div>
+    {/param}
+  {/call}
+{/template}
