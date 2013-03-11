@@ -21,7 +21,7 @@ class SubscribeServlet implements PostHandler {
 
     Subscription subscription = xmpp.parseSubscription(req);
     
-    new Chat().send(subscription.getFromJid().getId(),
-        "Yo! How is it going? I'm X and I'm here to help :) You can try thing like 'Remind me that my SSN is 1234.' or 'What's 2+2?'.");
+    // new Chat().send(subscription.getFromJid().getId(),
+    //    "Yo! How is it going? I'm X and I'm here to help :) You can try thing like 'Remind me that my SSN is 1234.' or 'What's 2+2?'.");
   }
 }

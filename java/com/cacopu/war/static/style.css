@@ -2,7 +2,7 @@ body {
   background-color: white;
   font: 0.75em 'Lucida Grande',sans-serif;
   background: #D0CDCD url('background.jpg') fixed  top left;
-  padding: 25px;
+  margin-bottom: 0px;
 }
 
 .container {
@@ -10,6 +10,7 @@ body {
   min-height: 550px;
   background-color: white;
   text-align: left;
+  margin-top: 25px;
 }
 
 .header {
