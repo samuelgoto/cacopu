@@ -33,7 +33,7 @@
 {template .header}
   <div class="header">
     <h2 class="header-title">
-      <a class="title" href="/">welcome!</a>
+      <a class="title" href="/">Welcome!</a>
     </h2>
     <div>
       <form id="search" method="get" action="/search">
@@ -118,15 +118,15 @@
 /**
  * @param notFound
  * @param id
- * @param name
- * @param price
- * @param description
+ * @param verb
+ * @param noun
+ * @param adjective
  * @param url
  * @param loggedIn
  * @param logoutUrl
  * @param loginUrl
  */
-{template .productHtml}
+{template .problemHtml}
   {call .html}
     {param body}
 
@@ -143,7 +143,7 @@
             {/call}
           {/if}
           {call .tab}
-            {param name}{$name|truncate:20}{/param}
+            {param name}{$verb|truncate:20}{/param}
             {param url}{/param}
             {param opt_active}true{/param}
           {/call}
@@ -167,18 +167,18 @@
         {if $notFound}
           Product not found!
         {else}
-          <a href="{$url}">{$name}</a>
-          <br>
-          <br>
-          <br>
-          <br>price: {$price}
-          <br>description: {$description}
+          <span class="header-title">
+          How do I {sp}
+          {$verb} {sp}
+          <a href="{$url}">{$noun} {sp} {$adjective}</a> {sp}
+          ?
+          </span>
 
           <br>
           <br>
           <br>
 
-          <input onclick="window.location='/checkout?id={$id}'" type="submit" value="order now!" />
+          <input onclick="window.location='/checkout?id={$id}'" type="submit" value="Answer!" />
           
         {/if}
       </div>
@@ -188,7 +188,7 @@
 
 /**
  */
-{template .productNotFoundHtml}
+{template .problemNotFoundHtml}
   {call .html}
     {param body}
 
@@ -527,7 +527,7 @@
 {/template}
 
 /**
- * @param products
+ * @param problems
  * @param logoutUrl
  */
 {template .createHtml}
@@ -560,45 +560,14 @@
     </script>
 
       <div class="row">   
-    	How do I:
-
-        <br>
-        <br>
-        <br>
-
+    	
     	<form method="POST" action="home">
-			<div class="item">
-	      		<div class="key">Name</div>
-      			<div class="value">
-    	    	<input type="text" name="name">
-		      	<br><small class="footnote">This is going to be the title of your ad.</small>
-      			</div>
-    		</div>
-
-			<div class="item">
-	      		<div class="key">Price</div>
-      			<div class="value">
-    	    	<input type="text" name="price">
-      			</div>
-    		</div>
-
-			<div class="item">
-	      		<div class="key">Description</div>
-      			<div class="value">
-    	    	<textarea name="description"></textarea>
-		      	<br><small class="footnote">This is going to be the title of your ad.</small>
-      			</div>
-    		</div>
-
-			<div class="item">
-	      		<div class="key">&nbsp;</div>
-      			<div class="value">
-    	 		<br>
-    	 		<br>
+        <span class="header-title">How do I {sp}</span>
+    	    	<input type="text" name="verb"></input>
+    	    	<input type="text" name="noun"></input>
+    	    	<input name="adjective"></input>
     	    	<input type="submit" value="create">
-      			</div>
     		</div>
-	    	
 	    </form>
 
         <div style="clear: both"></div>
@@ -611,12 +580,12 @@
         <br>
         <br>
 
-    	{foreach $product in $products}
-	      <a href="/{$product.id}">{$product.name}</a>
+    	{foreach $problem in $problems}
+	      <a href="/{$problem.id}">{$problem.verb}</a>
 	      {sp}
 	      <small>
-	      (<a href="/{$product.id}?delete=true"
-	          onclick="if (confirm('Are you sure you want to delete ?')) {lb} window.location = '/{$product.id}?delete=true';{rb}">
+	      (<a href="/{$problem.id}?delete=true"
+	          onclick="if (confirm('Are you sure you want to delete ?')) {lb} window.location = '/{$problem.id}?delete=true';{rb}">
 	      delete
 	      </a>)
 	      </small>

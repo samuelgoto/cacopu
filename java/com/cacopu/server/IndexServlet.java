@@ -56,22 +56,23 @@ public class IndexServlet implements GetHandler {
     
     try {
       Entity result = datastore.get(
-          KeyFactory.createKey("Employee", id));
+          KeyFactory.createKey("Problems", id));
       
       URI uri = new URI(req.getRequestURI());
       
-      User owner = (User) result.getProperty("user");
+      User owner = (User) result.getProperty("author");
       // TODO(goto): add tests and ensure this is suficient.
       if (!Strings.isNullOrEmpty(req.getParameter("delete")) &&
           user != null &&
+          owner != null &&
           user.getEmail().equals(owner.getEmail())) {
-        datastore.delete(KeyFactory.createKey("Employee", id));
+        datastore.delete(KeyFactory.createKey("Problems", id));
         resp.sendRedirect("/home");
         return;
       }
       
       if (!uri.getPath().substring(1).contains("/")) {
-        String name = result.getProperty("name").toString();
+        String name = result.getProperty("verb").toString();
         name = name.replace(' ', '-');
         name = URLEncoder.encode(name);
         resp.sendRedirect(result.getKey().getId() + "/" + name);
@@ -79,21 +80,21 @@ public class IndexServlet implements GetHandler {
       }
       
       resp.getWriter().print(
-          tofu.newRenderer("cacopu.productHtml")
+          tofu.newRenderer("cacopu.problemHtml")
           .setData(new SoyMapData(
               "loggedIn", user != null,
-              "name", result.getProperty("name"),
-              "price", result.getProperty("price"),
+              "verb", result.getProperty("verb"),
+              "noun", result.getProperty("noun"),
+              "adjective", result.getProperty("adjective"),
               "url", req.getRequestURI(),
               "id", id,
-              "description", result.getProperty("description"),
               "logoutUrl", userService.createLogoutURL(req.getRequestURI()),
               "loginUrl", userService.createLoginURL(req.getRequestURI())
               ))
           .render());
     } catch (EntityNotFoundException e) {
       resp.getWriter().print(
-          tofu.newRenderer("cacopu.productNotFoundHtml")
+          tofu.newRenderer("cacopu.problemNotFoundHtml")
           .render());
     } catch (URISyntaxException e) {
       resp.sendRedirect("/");

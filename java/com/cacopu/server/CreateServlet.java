@@ -29,18 +29,17 @@ class CreateServlet implements GetHandler, PostHandler {
     UserService userService = UserServiceFactory.getUserService();
     User user = userService.getCurrentUser();
 
-    Entity employee = new Entity("Employee");
-    employee.setProperty("name", req.getParameter("name"));
-    employee.setProperty("price", req.getParameter("price"));
-    employee.setProperty("description", req.getParameter("description"));
-    Date hireDate = new Date();
-    employee.setProperty("creation", hireDate);
-    employee.setProperty("user", user);
+    Entity problem = new Entity("Problems");
+    problem.setProperty("verb", req.getParameter("verb"));
+    problem.setProperty("noun", req.getParameter("noun"));
+    problem.setProperty("adjective", req.getParameter("adjective"));
+    Date date= new Date();
+    problem.setProperty("creation", date);
+    problem.setProperty("author", user);
 
-    datastore.put(employee);
+    datastore.put(problem);
 
-    resp.sendRedirect("/" + employee.getKey().getId());
-    // resp.sendRedirect("/home");
+    resp.sendRedirect("/" + problem.getKey().getId());
   }
 
   @Override public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -58,9 +57,9 @@ class CreateServlet implements GetHandler, PostHandler {
     User user = userService.getCurrentUser();
 
     // The Query interface assembles a query
-    Query q = new Query("Employee");
+    Query q = new Query("Problems");
     // q.addFilter("lastName", Query.FilterOperator.EQUAL, lastNameParam);
-    q.addFilter("user", Query.FilterOperator.EQUAL, user);
+    q.addFilter("author", Query.FilterOperator.EQUAL, user);
 
     // PreparedQuery contains the methods for fetching query results
     // from the datastore
@@ -71,7 +70,9 @@ class CreateServlet implements GetHandler, PostHandler {
     for (Entity result : pq.asIterable()) {
       products.add(new SoyMapData(
           "id", Long.toString(result.getKey().getId()),
-          "name", result.getProperty("name"),
+          "verb", result.getProperty("verb"),
+          "noun", result.getProperty("noun"),
+          "adjective", result.getProperty("adjective"),
           "creation", result.getProperty("creation").toString()
           ));
     }
@@ -79,7 +80,7 @@ class CreateServlet implements GetHandler, PostHandler {
     resp.getWriter().print(
         tofu.newRenderer("cacopu.createHtml")
         .setData(new SoyMapData(
-            "products", products,
+            "problems", products,
             "logoutUrl", userService.createLogoutURL("/")))
         .render());
   }
